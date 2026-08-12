@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عنوان صفحه</title>
+    <title>عشق من</title>
 
     <style>
         /* ===== تنظیمات کلی ===== */
@@ -19,36 +19,90 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(145deg, #e8eaf0, #d5d9e6);
+            background: linear-gradient(145deg, #2d1b2e, #1a0f1a);
             padding: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ===== کارت اصلی با انیمیشن ===== */
+        /* ===== قلب‌های شناور در پس‌زمینه ===== */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-float {
+            position: absolute;
+            color: rgba(255, 120, 150, 0.15);
+            font-size: 30px;
+            animation: floatHeart 8s ease-in-out infinite;
+            user-select: none;
+        }
+
+        .heart-float:nth-child(1) { left: 10%; animation-delay: 0s; font-size: 40px; }
+        .heart-float:nth-child(2) { left: 25%; animation-delay: 1.5s; font-size: 25px; }
+        .heart-float:nth-child(3) { left: 40%; animation-delay: 3s; font-size: 35px; }
+        .heart-float:nth-child(4) { left: 55%; animation-delay: 4.5s; font-size: 20px; }
+        .heart-float:nth-child(5) { left: 70%; animation-delay: 2s; font-size: 45px; }
+        .heart-float:nth-child(6) { left: 85%; animation-delay: 5.5s; font-size: 28px; }
+        .heart-float:nth-child(7) { left: 50%; animation-delay: 6.5s; font-size: 32px; }
+        .heart-float:nth-child(8) { left: 15%; animation-delay: 3.5s; font-size: 22px; }
+        .heart-float:nth-child(9) { left: 65%; animation-delay: 1s; font-size: 38px; }
+        .heart-float:nth-child(10) { left: 92%; animation-delay: 4s; font-size: 26px; }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-30px) rotate(5deg) scale(1.1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-60px) rotate(-5deg) scale(0.9);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translateY(-30px) rotate(5deg) scale(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* ===== کارت اصلی ===== */
         .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-radius: 32px;
-            padding: 25px;
-            max-width: 380px;
+            padding: 25px 25px 30px;
+            max-width: 400px;
             width: 100%;
             text-align: center;
+            border: 1px solid rgba(255, 200, 220, 0.2);
             box-shadow: 
-                0 15px 50px rgba(0, 0, 0, 0.08),
-                0 4px 15px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(255, 80, 120, 0.05);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 
             /* ===== انیمیشن ورود ===== */
             opacity: 0;
-            transform: translateY(30px) scale(0.97);
-            animation: cardEntry 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            transform: translateY(40px) scale(0.95);
+            animation: cardEntry 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes cardEntry {
             0% {
                 opacity: 0;
-                transform: translateY(30px) scale(0.97);
+                transform: translateY(40px) scale(0.95);
             }
             100% {
                 opacity: 1;
@@ -57,29 +111,34 @@
         }
 
         .card:hover {
-            transform: translateY(-4px) scale(1.01);
+            transform: translateY(-5px);
             box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.12),
-                0 8px 20px rgba(0, 0, 0, 0.04);
+                0 30px 70px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(255, 80, 120, 0.08);
         }
 
         /* ===== کادر عکس ===== */
         .image-wrapper {
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
             aspect-ratio: 1/1;
-            border-radius: 22px;
+            border-radius: 24px;
             overflow: hidden;
             margin: 0 auto;
-            background: linear-gradient(145deg, #e8eaf0, #d5d9e6);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            background: linear-gradient(145deg, #3d1f33, #251525);
+            border: 2px solid rgba(255, 200, 220, 0.15);
+            box-shadow: 
+                0 8px 30px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(255, 80, 120, 0.05);
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .image-wrapper:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.08);
+            border-color: rgba(255, 150, 200, 0.3);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(255, 80, 120, 0.08);
         }
 
         .image-wrapper img {
@@ -87,21 +146,117 @@
             height: 100%;
             display: block;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .image-wrapper:hover img {
-            transform: scale(1.04);
+            transform: scale(1.05);
+        }
+
+        /* ===== متن عاشقانه ===== */
+        .love-text {
+            margin-top: 20px;
+            padding: 0 5px;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: textEntry 0.9s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes textEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .love-text p {
+            font-size: 18px;
+            font-weight: 400;
+            color: #fce4ec;
+            line-height: 1.8;
+            text-shadow: 0 2px 20px rgba(255, 80, 120, 0.15);
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #ff9aae, #ff6b8a, #ff9aae);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerText 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmerText {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* ===== سه قلب کوچک زیر متن ===== */
+        .hearts-row {
+            margin-top: 12px;
+            font-size: 22px;
+            letter-spacing: 8px;
+            opacity: 0;
+            animation: heartPop 0.8s ease forwards;
+            animation-delay: 0.9s;
+        }
+
+        @keyframes heartPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            60% {
+                transform: scale(1.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hearts-row span {
+            display: inline-block;
+            animation: heartBeat 1.8s ease-in-out infinite;
+        }
+
+        .hearts-row span:nth-child(1) { animation-delay: 0s; }
+        .hearts-row span:nth-child(2) { animation-delay: 0.3s; }
+        .hearts-row span:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.8;
+            }
         }
 
         /* ===== ریسپانسیو ===== */
         @media (max-width: 480px) {
             .card {
-                padding: 18px;
+                padding: 18px 15px 22px;
                 border-radius: 24px;
             }
             .image-wrapper {
                 border-radius: 18px;
+            }
+            .love-text p {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+            .hearts-row {
+                font-size: 18px;
+                letter-spacing: 6px;
             }
         }
     </style>
@@ -109,12 +264,41 @@
 
 <body>
 
-    <!-- ===== کارت ===== -->
+    <!-- ===== قلب‌های شناور پس‌زمینه ===== -->
+    <div class="hearts-bg">
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+        <span class="heart-float">♥</span>
+    </div>
+
+    <!-- ===== کارت اصلی ===== -->
     <div class="card">
 
         <!-- ===== کادر عکس ===== -->
         <div class="image-wrapper">
-            <img src="1.jpg" alt="عکس شما">
+            <img src="1.jpg" alt="عشق من">
+        </div>
+
+        <!-- ===== متن عاشقانه ===== -->
+        <div class="love-text">
+            <p>
+                تو بهترین اتفاق زندگی‌ام هستی ❤️<br>
+                هر لحظه با تو، یک خاطره‌ی زیباست
+            </p>
+        </div>
+
+        <!-- ===== سه قلب ===== -->
+        <div class="hearts-row">
+            <span>♥</span>
+            <span>♥</span>
+            <span>♥</span>
         </div>
 
     </div>
