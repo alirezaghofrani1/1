@@ -50,7 +50,6 @@
             background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
         }
 
-        /* ===== لایه دوم شطرنجی با اندازه متفاوت (عمق بیشتر) ===== */
         .checkerboard-bg::after {
             content: '';
             position: absolute;
@@ -68,7 +67,6 @@
             pointer-events: none;
         }
 
-        /* ===== نورپردازی ملایم مرکز ===== */
         .checkerboard-bg .glow-center {
             position: absolute;
             top: 50%;
@@ -231,12 +229,6 @@
             display: block;
         }
 
-        .gif-wrapper video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
         .section-gif .sub-gif {
             color: rgba(57, 255, 20, 0.4);
             margin-top: 16px;
@@ -310,7 +302,7 @@
 </head>
 <body>
 
-    <!-- ===== پس‌زمینه شطرنجی مشکی + سبز ===== -->
+    <!-- ===== پس‌زمینه شطرنجی ===== -->
     <div class="checkerboard-bg">
         <div class="glow-center"></div>
     </div>
@@ -346,19 +338,14 @@
         <div class="glass-card">
             <h2>🎁</h2>
             <div class="gif-wrapper">
-                <!-- ===== استیکر webm یا گیف خودت ===== -->
-                <video autoplay loop muted playsinline>
-                    <source src="sticker.webm" type="video/webm">
-                    <img src="sticker.gif" alt="استیکر">
-                </video>
+                <img src="sticker.gif" alt="استیکر">
             </div>
             <p class="sub-gif">تقدیم با عشق</p>
         </div>
     </section>
 
-    <!-- ===== اسکریپت نمایش بخش‌ها ===== -->
+    <!-- ===== اسکریپت ===== -->
     <script>
-        // ===== نمایش بخش‌ها هنگام اسکرول =====
         const sections = document.querySelectorAll('.section');
 
         function checkVisibility() {
@@ -377,7 +364,6 @@
         window.addEventListener('load', checkVisibility);
         window.addEventListener('touchmove', checkVisibility);
 
-        // ===== اسکرول آروم =====
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({
                 behavior: 'smooth',
@@ -393,7 +379,7 @@
             });
         });
 
-        console.log('😏 پس‌زمینه شطرنجی مشکی + سبز!');
+        console.log('😏 پس‌زمینه شطرنجی + گیف!');
     </script>
 
 </body>
