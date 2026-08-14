@@ -134,7 +134,37 @@
             font-weight: 400;
         }
 
-         .point-down { font-size: 56px; display: block; margin-top: 12px; animation: bouncePoint 1.8s ease-in-out infinite; }
+        .point-down { 
+            font-size: 56px; 
+            display: block; 
+            margin-top: 12px; 
+            animation: bouncePoint 1.8s ease-in-out infinite; 
+        }
+
+        /* ===== استایل استیکر ===== */
+        .sticker-wrapper {
+            width: 100%;
+            max-width: 360px;
+            border-radius: 22px;
+            overflow: hidden;
+            margin: 16px auto 0;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .sticker-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .sticker-sub {
+            color: rgba(57, 255, 20, 0.4);
+            margin-top: 16px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
 
         /* ===== فلش پایین ===== */
         .arrow-down {
@@ -215,30 +245,6 @@
             margin-bottom: 18px;
         }
 
-        .gif-wrapper {
-            width: 100%;
-            max-width: 360px;
-            border-radius: 22px;
-            overflow: hidden;
-            margin: 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-        }
-
-        .gif-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .section-gif .sub-gif {
-            color: rgba(57, 255, 20, 0.4);
-            margin-top: 16px;
-            font-size: 18px;
-            letter-spacing: 2px;
-            font-weight: 300;
-        }
-
         /* ===== ریسپانسیو ===== */
         @media (max-width: 480px) {
             .glass-card {
@@ -263,7 +269,7 @@
             .section-gif h2 {
                 font-size: 26px;
             }
-            .gif-wrapper {
+            .sticker-wrapper {
                 max-width: 280px;
                 border-radius: 18px;
             }
@@ -271,7 +277,7 @@
                 font-size: 30px;
                 bottom: 25px;
             }
-            .section-gif .sub-gif {
+            .sticker-sub {
                 font-size: 16px;
             }
         }
@@ -299,6 +305,10 @@
             .section-gif h2 {
                 font-size: 22px;
             }
+            .sticker-wrapper {
+                max-width: 220px;
+                border-radius: 14px;
+            }
         }
     </style>
 </head>
@@ -312,9 +322,12 @@
     <!-- ===== بخش اول ===== -->
     <section class="section" id="section1">
         <div class="glass-card">
-            <h1>بیا پایین</h1
-        <span class="point-down">👇</span>
-
+            <h1>بیا پایین</h1>
+            <div class="sticker-wrapper">
+                <img src="sticker.gif" alt="استیکر">
+            </div>
+            <p class="sticker-sub">تقدیم با عشق</p>
+            <span class="point-down">👇</span>
         </div>
         <div class="arrow-down" onclick="scrollToSection('section2')">↓</div>
     </section>
@@ -341,10 +354,10 @@
     <section class="section section-gif" id="section4">
         <div class="glass-card">
             <h2>🎁</h2>
-            <div class="gif-wrapper">
+            <div class="sticker-wrapper">
                 <img src="sticker.gif" alt="استیکر">
             </div>
-            <p class="sub-gif">تقدیم با عشق</p>
+            <p class="sticker-sub">تقدیم با عشق</p>
         </div>
     </section>
 
