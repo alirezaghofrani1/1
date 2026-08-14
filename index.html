@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عشق من</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>شوخی</title>
 
-    <!-- ===== فونت نستعلیق ===== -->
-    <link href="https://cdn.fontcdn.ir/Font/Persian/VazirMatn/VazirMatn.css" rel="stylesheet">
+    <!-- ===== رنگ نوار آدرس کروم (گوشی) ===== -->
+    <meta name="theme-color" content="#00ff88">
+    <meta name="msapplication-navbutton-color" content="#00ff88">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <style>
         /* ===== تنظیمات کلی ===== */
         * {
@@ -15,310 +19,439 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'VazirMatn', 'IranNastaliq', 'Nastaliq', 'Noto Naskh Arabic', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #000000;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ===== کانواس انیمیشن (پس‌زمینه) ===== */
+        #networkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== هر بخش ===== */
+        .section {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(145deg, #2d1b2e, #1a0f1a);
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* ===== بارش قلب‌ها ===== */
-        .hearts-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .heart-drop {
-            position: absolute;
-            top: -50px;
-            color: rgba(255, 100, 140, 0.35);
-            font-size: 24px;
-            user-select: none;
-            animation: heartFall linear infinite;
-        }
-
-        .heart-drop:nth-child(1) { left: 5%; font-size: 18px; animation-duration: 8s; animation-delay: 0s; opacity: 0.3; }
-        .heart-drop:nth-child(2) { left: 12%; font-size: 28px; animation-duration: 10s; animation-delay: 1s; opacity: 0.4; }
-        .heart-drop:nth-child(3) { left: 20%; font-size: 16px; animation-duration: 7s; animation-delay: 2s; opacity: 0.35; }
-        .heart-drop:nth-child(4) { left: 28%; font-size: 32px; animation-duration: 11s; animation-delay: 0.5s; opacity: 0.25; }
-        .heart-drop:nth-child(5) { left: 35%; font-size: 20px; animation-duration: 9s; animation-delay: 3s; opacity: 0.4; }
-        .heart-drop:nth-child(6) { left: 42%; font-size: 26px; animation-duration: 8.5s; animation-delay: 1.5s; opacity: 0.3; }
-        .heart-drop:nth-child(7) { left: 50%; font-size: 15px; animation-duration: 7.5s; animation-delay: 4s; opacity: 0.45; }
-        .heart-drop:nth-child(8) { left: 58%; font-size: 34px; animation-duration: 12s; animation-delay: 0.8s; opacity: 0.2; }
-        .heart-drop:nth-child(9) { left: 65%; font-size: 22px; animation-duration: 9.5s; animation-delay: 2.5s; opacity: 0.35; }
-        .heart-drop:nth-child(10) { left: 72%; font-size: 18px; animation-duration: 8s; animation-delay: 3.5s; opacity: 0.4; }
-        .heart-drop:nth-child(11) { left: 78%; font-size: 30px; animation-duration: 10.5s; animation-delay: 1.2s; opacity: 0.25; }
-        .heart-drop:nth-child(12) { left: 85%; font-size: 16px; animation-duration: 7s; animation-delay: 4.5s; opacity: 0.4; }
-        .heart-drop:nth-child(13) { left: 92%; font-size: 26px; animation-duration: 9s; animation-delay: 2s; opacity: 0.3; }
-        .heart-drop:nth-child(14) { left: 48%; font-size: 20px; animation-duration: 8.8s; animation-delay: 5s; opacity: 0.35; }
-        .heart-drop:nth-child(15) { left: 15%; font-size: 14px; animation-duration: 6.5s; animation-delay: 3.8s; opacity: 0.5; }
-        .heart-drop:nth-child(16) { left: 62%; font-size: 36px; animation-duration: 13s; animation-delay: 0.3s; opacity: 0.15; }
-        .heart-drop:nth-child(17) { left: 88%; font-size: 22px; animation-duration: 9.2s; animation-delay: 4.2s; opacity: 0.3; }
-        .heart-drop:nth-child(18) { left: 32%; font-size: 28px; animation-duration: 10.8s; animation-delay: 1.8s; opacity: 0.25; }
-        .heart-drop:nth-child(19) { left: 55%; font-size: 16px; animation-duration: 7.2s; animation-delay: 5.5s; opacity: 0.4; }
-        .heart-drop:nth-child(20) { left: 75%; font-size: 30px; animation-duration: 11.5s; animation-delay: 2.2s; opacity: 0.2; }
-
-        @keyframes heartFall {
-            0% {
-                transform: translateY(-50px) rotate(0deg) scale(1);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(calc(100vh + 50px)) rotate(720deg) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* ===== کارت اصلی با انیمیشن آروم ===== */
-        .card {
+            flex-direction: column;
+            padding: 40px 20px;
+            text-align: center;
             position: relative;
             z-index: 1;
+        }
+
+        /* ===== کادر شیشه‌ای مثل آیفون ===== */
+        .glass-card {
             background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 32px;
-            padding: 25px 25px 30px;
-            max-width: 400px;
+            backdrop-filter: blur(40px) saturate(1.4);
+            -webkit-backdrop-filter: blur(40px) saturate(1.4);
+            border-radius: 34px;
+            padding: 44px 38px;
+            max-width: 450px;
             width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 200, 220, 0.15);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
             
-            /* ===== انیمیشن آروم کل صفحه ===== */
+            /* ===== انیمیشن محو ===== */
             opacity: 0;
-            animation: pageFadeIn 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        @keyframes pageFadeIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.98);
+        .section.visible .glass-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== استایل متن‌ها ===== */
+        .glass-card h1 {
+            font-size: 52px;
+            font-weight: 700;
+            color: #39ff14;
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.15);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .glass-card p {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 12px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* ===== فلش پایین ===== */
+        .arrow-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            color: #39ff14;
+            animation: bounceArrow 2s ease-in-out infinite;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .arrow-down:active {
+            opacity: 1;
+            transform: translateX(-50%) scale(0.9);
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
             }
-            100% {
-                opacity: 1;
-                transform: scale(1);
+            50% {
+                transform: translateX(-50%) translateY(12px);
             }
         }
 
-        /* ===== کادر عکس با انیمیشن آروم از پایین ===== */
-        .image-wrapper {
+        /* ===== بخش سوم: رسیدی + جایزت این پایینه ===== */
+        .section-prize .glass-card {
+            padding: 38px 32px 32px;
+        }
+
+        .section-prize h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #39ff14;
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.12);
+            letter-spacing: -0.5px;
+        }
+
+        .section-prize .prize-text {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .section-prize .point-down {
+            font-size: 56px;
+            display: block;
+            margin-top: 12px;
+            animation: bouncePoint 1.8s ease-in-out infinite;
+        }
+
+        @keyframes bouncePoint {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        /* ===== بخش چهارم: گیف ===== */
+        .section-gif .glass-card {
+            padding: 32px 28px 36px;
+        }
+
+        .section-gif h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #39ff14;
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.12);
+            margin-bottom: 18px;
+        }
+
+        .gif-wrapper {
             width: 100%;
-            max-width: 340px;
-            aspect-ratio: 1/1;
-            border-radius: 24px;
+            max-width: 360px;
+            border-radius: 22px;
             overflow: hidden;
             margin: 0 auto;
-            background: linear-gradient(145deg, #3d1f33, #251525);
-            border: 2px solid rgba(255, 200, 220, 0.12);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            
-            /* ===== انیمیشن آروم از پایین ===== */
-            opacity: 0;
-            transform: translateY(60px);
-            animation: imageSlideUp 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            animation-delay: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes imageSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .image-wrapper img {
+        .gif-wrapper img {
             width: 100%;
-            height: 100%;
+            height: auto;
             display: block;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .image-wrapper:hover img {
-            transform: scale(1.04);
-        }
-
-        /* ===== متن عاشقانه با فونت نستعلیق ===== */
-        .love-text {
-            margin-top: 22px;
-            padding: 0 5px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: textSlideUp 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            animation-delay: 0.7s;
-        }
-
-        @keyframes textSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .love-text p {
-            font-family: 'VazirMatn', 'IranNastaliq', 'Nastaliq', serif;
-            font-size: 20px;
+        .section-gif .sub-gif {
+            color: rgb(0, 255, 21);
+            margin-top: 16px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 300;
             font-weight: 400;
-            color: #fce4ec;
-            line-height: 2.2;
-            text-shadow: 0 2px 30px rgba(255, 80, 120, 0.15);
-            letter-spacing: 1px;
-            background: linear-gradient(90deg, #ffb3c6, #ff6b8a, #ffb3c6);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmerText 5s ease-in-out infinite;
-        }
-
-        @keyframes shimmerText {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        /* ===== سه قلب زیر متن ===== */
-        .hearts-row {
-            margin-top: 14px;
-            font-size: 24px;
-            letter-spacing: 10px;
-            opacity: 0;
-            animation: heartPop 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            animation-delay: 1.1s;
-        }
-
-        @keyframes heartPop {
-            0% {
-                opacity: 0;
-                transform: scale(0.6);
-            }
-            60% {
-                transform: scale(1.2);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .hearts-row span {
-            display: inline-block;
-            animation: heartBeat 2s ease-in-out infinite;
-        }
-
-        .hearts-row span:nth-child(1) { animation-delay: 0s; }
-        .hearts-row span:nth-child(2) { animation-delay: 0.4s; }
-        .hearts-row span:nth-child(3) { animation-delay: 0.8s; }
-
-        @keyframes heartBeat {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            50% {
-                transform: scale(1.3);
-                opacity: 1;
-            }
         }
 
         /* ===== ریسپانسیو ===== */
         @media (max-width: 480px) {
-            .card {
-                padding: 18px 15px 22px;
-                border-radius: 24px;
+            .glass-card {
+                padding: 32px 24px;
+                border-radius: 28px;
             }
-            .image-wrapper {
+            .glass-card h1 {
+                font-size: 40px;
+            }
+            .glass-card p {
+                font-size: 20px;
+            }
+            .section-prize h2 {
+                font-size: 34px;
+            }
+            .section-prize .prize-text {
+                font-size: 20px;
+            }
+            .section-prize .point-down {
+                font-size: 44px;
+            }
+            .section-gif h2 {
+                font-size: 26px;
+            }
+            .gif-wrapper {
+                max-width: 280px;
                 border-radius: 18px;
             }
-            .love-text p {
-                font-size: 17px;
-                line-height: 2;
+            .arrow-down {
+                font-size: 30px;
+                bottom: 25px;
             }
-            .hearts-row {
-                font-size: 20px;
-                letter-spacing: 8px;
+            .section-gif .sub-gif {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .glass-card {
+                padding: 26px 18px;
+                border-radius: 24px;
+            }
+            .glass-card h1 {
+                font-size: 32px;
+            }
+            .glass-card p {
+                font-size: 17px;
+            }
+            .section-prize h2 {
+                font-size: 28px;
+            }
+            .section-prize .prize-text {
+                font-size: 17px;
+            }
+            .section-prize .point-down {
+                font-size: 38px;
+            }
+            .section-gif h2 {
+                font-size: 22px;
             }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- ===== بارش قلب‌ها ===== -->
-    <div class="hearts-rain">
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-        <span class="heart-drop">♥</span>
-    </div>
+    <!-- ===== کانواس انیمیشن شبکه نئونی (پس‌زمینه) ===== -->
+    <canvas id="networkCanvas"></canvas>
 
-    <!-- ===== کارت اصلی ===== -->
-    <div class="card">
-
-        <!-- ===== کادر عکس ===== -->
-        <div class="image-wrapper">
-            <img src="1.jpg" alt="عشق من">
+    <!-- ===== بخش اول: بیا پایین ===== -->
+    <section class="section" id="section1">
+        <div class="glass-card">
+            <h1>بیا پایین</h1>
         </div>
+        <div class="arrow-down" onclick="scrollToSection('section2')">↓</div>
+    </section>
 
-        <!-- ===== متن عاشقانه با فونت نستعلیق ===== -->
-        <div class="love-text">
-            <p>
-                تو بهترین اتفاق زندگی‌ام هستی ❤️<br>
-                هر لحظه با تو، یک خاطره‌ی زیباست
-            </p>
+    <!-- ===== بخش دوم: بازم پایین‌تر ===== -->
+    <section class="section" id="section2">
+        <div class="glass-card">
+            <h1>بازم پایین‌تر</h1>
         </div>
+        <div class="arrow-down" onclick="scrollToSection('section3')">↓</div>
+    </section>
 
-        <!-- ===== سه قلب ===== -->
-        <div class="hearts-row">
-            <span>♥</span>
-            <span>♥</span>
-            <span>♥</span>
+    <!-- ===== بخش سوم: رسیدی + جایزت این پایینه + استیکر دست ===== -->
+    <section class="section section-prize" id="section3">
+        <div class="glass-card">
+            <h2>رسیدی</h2>
+            <p class="prize-text">جایزت این پایینه</p>
+            <span class="point-down">👇</span>
         </div>
+        <div class="arrow-down" onclick="scrollToSection('section4')">↓</div>
+    </section>
 
-    </div>
+    <!-- ===== بخش چهارم: گیف ===== -->
+    <section class="section section-gif" id="section4">
+        <div class="glass-card">
+            <h2>🎁</h2>
+            <div class="gif-wrapper">
+                <!-- ===== گیف خودت رو بزار ===== -->
+                <img src="sticker.gif" alt="گیف">
+            </div>
+            <p class="sub-gif">تقدیم با عشق</p>
+        </div>
+    </section>
+
+    <!-- ===== اسکریپت انیمیشن خودکار (بدون تاثیر موس) ===== -->
+    <script>
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // ===== حرکت مستقل و خودکار گره‌ها =====
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                // سرعت‌های متفاوت برای حرکت‌های نامنظم
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 2.5 + 1.5;
+                // برای تغییرات ناگهانی جهت
+                this.directionChange = Math.random() * 200 + 100;
+                this.frame = 0;
+            }
+
+            update() {
+                this.frame++;
+
+                // ===== تغییر ناگهانی جهت برای حرکت‌های نامنظم =====
+                if (this.frame > this.directionChange) {
+                    this.vx += (Math.random() - 0.5) * 0.2;
+                    this.vy += (Math.random() - 0.5) * 0.2;
+                    // محدود کردن سرعت
+                    const maxSpeed = 0.8;
+                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                    if (speed > maxSpeed) {
+                        this.vx = (this.vx / speed) * maxSpeed;
+                        this.vy = (this.vy / speed) * maxSpeed;
+                    }
+                    this.directionChange = Math.random() * 200 + 100;
+                    this.frame = 0;
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // ===== بازگشت از لبه‌ها =====
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowColor = '#39ff14';
+                ctx.shadowBlur = 6;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        const particles = [];
+        const particleCount = 120;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // ===== رسم خطوط بین گره‌ها =====
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        let opacityValue = 1 - (distance / 150);
+                        ctx.strokeStyle = `rgba(57, 255, 20, ${opacityValue * 0.9})`;
+                        ctx.lineWidth = 1.2;
+                        ctx.shadowColor = '#39ff14';
+                        ctx.shadowBlur = 4;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+            }
+
+            // ===== رسم گره‌ها =====
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+        }
+
+        animate();
+
+        // ===== نمایش بخش‌ها هنگام اسکرول =====
+        const sections = document.querySelectorAll('.section');
+
+        function checkVisibility() {
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const threshold = windowHeight * 0.78;
+
+                if (rect.top < threshold) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkVisibility);
+        window.addEventListener('load', checkVisibility);
+        window.addEventListener('touchmove', checkVisibility);
+
+        // ===== اسکرول آروم =====
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        document.querySelectorAll('.arrow-down').forEach(arrow => {
+            arrow.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                scrollToSection(target);
+            });
+        });
+
+        console.log('😏 انیمیشن خودکار بدون تاثیر موس!');
+    </script>
 
 </body>
 </html>
