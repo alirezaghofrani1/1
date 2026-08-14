@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>شوخی</title>
 
-    <!-- ===== رنگ نوار آدرس کروم (گوشی) ===== -->
+    <!-- ===== رنگ نوار آدرس ===== -->
     <meta name="theme-color" content="#00ff88">
     <meta name="msapplication-navbutton-color" content="#00ff88">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,21 +25,60 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #000000;
+            background: #0a0a0a;
             color: #fff;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
         }
 
-        /* ===== کانواس انیمیشن (پس‌زمینه) ===== */
-        #networkCanvas {
+        /* ===== پس‌زمینه شطرنجی (مشکی + سبز نئونی) ===== */
+        .checkerboard-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             z-index: 0;
+            background-color: #0a0a0a;
+            background-image: 
+                linear-gradient(45deg, rgba(57, 255, 20, 0.06) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(57, 255, 20, 0.06) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(57, 255, 20, 0.06) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(57, 255, 20, 0.06) 75%);
+            background-size: 60px 60px;
+            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+        }
+
+        /* ===== لایه دوم شطرنجی با اندازه متفاوت (عمق بیشتر) ===== */
+        .checkerboard-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, rgba(57, 255, 20, 0.03) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(57, 255, 20, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(57, 255, 20, 0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(57, 255, 20, 0.03) 75%);
+            background-size: 120px 120px;
+            background-position: 0 0, 0 60px, 60px -60px, -60px 0px;
             pointer-events: none;
+        }
+
+        /* ===== نورپردازی ملایم مرکز ===== */
+        .checkerboard-bg .glow-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(57, 255, 20, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
         }
 
         /* ===== هر بخش ===== */
@@ -55,21 +94,20 @@
             z-index: 1;
         }
 
-        /* ===== کادر شیشه‌ای مثل آیفون ===== */
+        /* ===== کادر شیشه‌ای ===== */
         .glass-card {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(40px) saturate(1.4);
             -webkit-backdrop-filter: blur(40px) saturate(1.4);
             border-radius: 34px;
             padding: 44px 38px;
             max-width: 450px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
             
-            /* ===== انیمیشن محو ===== */
             opacity: 0;
             transform: translateY(40px);
             transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -85,14 +123,14 @@
             font-size: 52px;
             font-weight: 700;
             color: #39ff14;
-            text-shadow: 0 0 50px rgba(57, 255, 20, 0.15);
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.12);
             line-height: 1.2;
             letter-spacing: -0.5px;
         }
 
         .glass-card p {
             font-size: 24px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.45);
             margin-top: 12px;
             line-height: 1.6;
             font-weight: 400;
@@ -128,7 +166,7 @@
             }
         }
 
-        /* ===== بخش سوم: رسیدی + جایزت این پایینه ===== */
+        /* ===== بخش سوم ===== */
         .section-prize .glass-card {
             padding: 38px 32px 32px;
         }
@@ -137,13 +175,13 @@
             font-size: 42px;
             font-weight: 700;
             color: #39ff14;
-            text-shadow: 0 0 50px rgba(57, 255, 20, 0.12);
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.10);
             letter-spacing: -0.5px;
         }
 
         .section-prize .prize-text {
             font-size: 24px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.45);
             margin-top: 8px;
             font-weight: 400;
         }
@@ -164,7 +202,7 @@
             }
         }
 
-        /* ===== بخش چهارم: گیف ===== */
+        /* ===== بخش چهارم ===== */
         .section-gif .glass-card {
             padding: 32px 28px 36px;
         }
@@ -173,7 +211,7 @@
             font-size: 32px;
             font-weight: 700;
             color: #39ff14;
-            text-shadow: 0 0 50px rgba(57, 255, 20, 0.12);
+            text-shadow: 0 0 50px rgba(57, 255, 20, 0.10);
             margin-bottom: 18px;
         }
 
@@ -183,8 +221,8 @@
             border-radius: 22px;
             overflow: hidden;
             margin: 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
         }
 
         .gif-wrapper img {
@@ -193,13 +231,18 @@
             display: block;
         }
 
+        .gif-wrapper video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
         .section-gif .sub-gif {
-            color: rgb(0, 255, 21);
+            color: rgba(57, 255, 20, 0.4);
             margin-top: 16px;
             font-size: 18px;
             letter-spacing: 2px;
             font-weight: 300;
-            font-weight: 400;
         }
 
         /* ===== ریسپانسیو ===== */
@@ -267,10 +310,12 @@
 </head>
 <body>
 
-    <!-- ===== کانواس انیمیشن شبکه نئونی (پس‌زمینه) ===== -->
-    <canvas id="networkCanvas"></canvas>
+    <!-- ===== پس‌زمینه شطرنجی مشکی + سبز ===== -->
+    <div class="checkerboard-bg">
+        <div class="glow-center"></div>
+    </div>
 
-    <!-- ===== بخش اول: بیا پایین ===== -->
+    <!-- ===== بخش اول ===== -->
     <section class="section" id="section1">
         <div class="glass-card">
             <h1>بیا پایین</h1>
@@ -278,7 +323,7 @@
         <div class="arrow-down" onclick="scrollToSection('section2')">↓</div>
     </section>
 
-    <!-- ===== بخش دوم: بازم پایین‌تر ===== -->
+    <!-- ===== بخش دوم ===== -->
     <section class="section" id="section2">
         <div class="glass-card">
             <h1>بازم پایین‌تر</h1>
@@ -286,7 +331,7 @@
         <div class="arrow-down" onclick="scrollToSection('section3')">↓</div>
     </section>
 
-    <!-- ===== بخش سوم: رسیدی + جایزت این پایینه + استیکر دست ===== -->
+    <!-- ===== بخش سوم ===== -->
     <section class="section section-prize" id="section3">
         <div class="glass-card">
             <h2>رسیدی</h2>
@@ -296,125 +341,23 @@
         <div class="arrow-down" onclick="scrollToSection('section4')">↓</div>
     </section>
 
-    <!-- ===== بخش چهارم: گیف ===== -->
+    <!-- ===== بخش چهارم ===== -->
     <section class="section section-gif" id="section4">
         <div class="glass-card">
             <h2>🎁</h2>
             <div class="gif-wrapper">
-                <!-- ===== گیف خودت رو بزار ===== -->
-                <img src="sticker.gif" alt="گیف">
+                <!-- ===== استیکر webm یا گیف خودت ===== -->
+                <video autoplay loop muted playsinline>
+                    <source src="sticker.webm" type="video/webm">
+                    <img src="sticker.gif" alt="استیکر">
+                </video>
             </div>
             <p class="sub-gif">تقدیم با عشق</p>
         </div>
     </section>
 
-    <!-- ===== اسکریپت انیمیشن خودکار (بدون تاثیر موس) ===== -->
+    <!-- ===== اسکریپت نمایش بخش‌ها ===== -->
     <script>
-        const canvas = document.getElementById('networkCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // ===== حرکت مستقل و خودکار گره‌ها =====
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                // سرعت‌های متفاوت برای حرکت‌های نامنظم
-                this.vx = (Math.random() - 0.5) * 0.6;
-                this.vy = (Math.random() - 0.5) * 0.6;
-                this.radius = Math.random() * 2.5 + 1.5;
-                // برای تغییرات ناگهانی جهت
-                this.directionChange = Math.random() * 200 + 100;
-                this.frame = 0;
-            }
-
-            update() {
-                this.frame++;
-
-                // ===== تغییر ناگهانی جهت برای حرکت‌های نامنظم =====
-                if (this.frame > this.directionChange) {
-                    this.vx += (Math.random() - 0.5) * 0.2;
-                    this.vy += (Math.random() - 0.5) * 0.2;
-                    // محدود کردن سرعت
-                    const maxSpeed = 0.8;
-                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-                    if (speed > maxSpeed) {
-                        this.vx = (this.vx / speed) * maxSpeed;
-                        this.vy = (this.vy / speed) * maxSpeed;
-                    }
-                    this.directionChange = Math.random() * 200 + 100;
-                    this.frame = 0;
-                }
-
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // ===== بازگشت از لبه‌ها =====
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
-            }
-
-            draw() {
-                ctx.fillStyle = '#ffffff';
-                ctx.shadowColor = '#39ff14';
-                ctx.shadowBlur = 6;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
-
-        const particles = [];
-        const particleCount = 120;
-
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // ===== رسم خطوط بین گره‌ها =====
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    let dx = particles[i].x - particles[j].x;
-                    let dy = particles[i].y - particles[j].y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 150) {
-                        let opacityValue = 1 - (distance / 150);
-                        ctx.strokeStyle = `rgba(57, 255, 20, ${opacityValue * 0.9})`;
-                        ctx.lineWidth = 1.2;
-                        ctx.shadowColor = '#39ff14';
-                        ctx.shadowBlur = 4;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                        ctx.shadowBlur = 0;
-                    }
-                }
-            }
-
-            // ===== رسم گره‌ها =====
-            for (let particle of particles) {
-                particle.update();
-                particle.draw();
-            }
-        }
-
-        animate();
-
         // ===== نمایش بخش‌ها هنگام اسکرول =====
         const sections = document.querySelectorAll('.section');
 
@@ -450,7 +393,7 @@
             });
         });
 
-        console.log('😏 انیمیشن خودکار بدون تاثیر موس!');
+        console.log('😏 پس‌زمینه شطرنجی مشکی + سبز!');
     </script>
 
 </body>
